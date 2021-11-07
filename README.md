@@ -1,4 +1,7 @@
 # HoloBot
+![Build workflow](https://github.com/tacticalcatto/holobot/actions/workflows/build.yml/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tacticalcatto/holobot)](https://goreportcard.com/report/github.com/tacticalcatto/holobot)
+
 HoloBot — An open-source Discord bot for Hololive fans, built with Go.
 
 ## Installation
