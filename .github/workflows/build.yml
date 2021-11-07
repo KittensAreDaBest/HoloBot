@@ -1,0 +1,34 @@
+name: Build
+on:
+   push:
+      branches:
+         - main
+jobs:
+   build:
+      strategy:
+         matrix:
+            os: [ 'ubuntu-20.04' ]
+            go: [ '^1.17' ]
+            go-os: [ 'linux' ]
+            go-arch: [ 'amd64', 'arm64' ]
+      runs-on: ${{ matrix.os }}
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v2
+         - name: Setup Go 1.17
+           uses: actions/setup-go@v2
+           with:
+              go-version: '^1.17'
+         - name: Build code
+           env:
+              CGO_ENABLED: 0
+              GOOS: ${{ matrix.go-os }}
+              GOARCH: ${{ matrix.go-arch }}
+           run: |
+              go build -ldflags="-s -w" -v -trimpath -o holobot_${{ matrix.go-os }}_${{ matrix.go-arch }} main.go
+              upx holobot_${{ matrix.go-os }}_${{ matrix.go-arch }}
+         - name: Upload artifacts
+           uses: actions/upload-artifact@v2
+           with:
+              name: holobot_${{ matrix.go-os }}_${{ matrix.go-arch }}
+              path: holobot_${{ matrix.go-os }}_${{ matrix.go-arch }}
