@@ -19,7 +19,7 @@ type HoloBot struct {
 var commands = []api.CreateCommandData{
 	{
 		Name:        "source",
-		Description: "Get GitHub repository URL.",
+		Description: "Get GitHub repository URL for this bot.",
 	},
 	{
 		Name:        "schedule",
@@ -35,7 +35,7 @@ var commands = []api.CreateCommandData{
 	},
 }
 
-func (bot HoloBot) OnCommand(e *gateway.InteractionCreateEvent) {
+func (bot *HoloBot) OnCommand(e *gateway.InteractionCreateEvent) {
 	switch data := e.Data.(type) {
 	case *discord.CommandInteractionData:
 		switch data.Name {
@@ -54,7 +54,7 @@ func (bot HoloBot) OnCommand(e *gateway.InteractionCreateEvent) {
 	}
 }
 
-func (bot HoloBot) LoadCommands() error {
+func (bot *HoloBot) LoadCommands() error {
 	for _, command := range commands {
 		log.WithField("command", command.Name).Info("loading command")
 

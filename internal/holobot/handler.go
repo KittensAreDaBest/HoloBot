@@ -13,13 +13,13 @@ import (
 	"strings"
 )
 
-func (bot HoloBot) handleSourceCmd(e *gateway.InteractionCreateEvent, d *discord.CommandInteractionData) {
+func (bot *HoloBot) handleSourceCmd(e *gateway.InteractionCreateEvent, d *discord.CommandInteractionData) {
 	if err := bot.Session.RespondInteraction(e.ID, e.Token, api.InteractionResponse{
 		Type: api.MessageInteractionWithSource,
 		Data: &api.InteractionResponseData{
 			Embeds: &[]discord.Embed{
 				{
-					Title:       "GitHub Repository",
+					Title:       "**GitHub Repository**",
 					Description: "https://github.com/tacticalcatto/holobot",
 				},
 			},
@@ -29,7 +29,7 @@ func (bot HoloBot) handleSourceCmd(e *gateway.InteractionCreateEvent, d *discord
 	}
 }
 
-func (bot HoloBot) handleScheduleCmd(e *gateway.InteractionCreateEvent, d *discord.CommandInteractionData) {
+func (bot *HoloBot) handleScheduleCmd(e *gateway.InteractionCreateEvent, d *discord.CommandInteractionData) {
 	timezone := bot.Config.Timezone
 	if len(d.Options) == 1 {
 		timezone = d.Options[0].String()
@@ -101,7 +101,7 @@ func (bot HoloBot) handleScheduleCmd(e *gateway.InteractionCreateEvent, d *disco
 	}
 }
 
-func (bot HoloBot) handleScheduleComponent(e *gateway.InteractionCreateEvent, d *discord.ComponentInteractionData, cmd string) {
+func (bot *HoloBot) handleScheduleComponent(e *gateway.InteractionCreateEvent, d *discord.ComponentInteractionData, cmd string) {
 	split := strings.SplitN(cmd, ".", 2)
 	timezone := bot.Config.Timezone
 	if split[1] != "" {
@@ -196,8 +196,8 @@ func (bot HoloBot) handleScheduleComponent(e *gateway.InteractionCreateEvent, d 
 func streamFields(streams []hololive.HololiveStream) []discord.EmbedField {
 	var fields []discord.EmbedField
 
-	for _, s := range streams {
-		fields = append(fields, s.ToDiscordField())
+	for _, stream := range streams {
+		fields = append(fields, stream.ToDiscordField())
 	}
 
 	return fields
