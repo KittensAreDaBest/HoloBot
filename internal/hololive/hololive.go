@@ -39,7 +39,7 @@ func (stream HololiveStream) ToDiscordField() discord.EmbedField {
 func GetSchedule(timezone string) (HololiveSchedule, error) {
 	var schedule HololiveSchedule
 
-	res, err := http.Get(fmt.Sprintf("https://hololive-schedule.hyperkittens.repl.co/api/v1/schedule?group=all&timezone=%s", timezone))
+	res, err := http.Get(fmt.Sprintf("https://api.hololive.host/api/v1/schedule?group=all&timezone=%s", timezone))
 	if err != nil {
 		return schedule, err
 	}
